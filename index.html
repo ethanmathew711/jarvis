@@ -1,0 +1,107 @@
+{
+  "model": "gpt-4.1-mini",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What's the weather today?"
+    }
+  ]
+}
+https://api.openai.com/v1/chat/completions
+flutter create ai_voice_app
+cd ai_voice_app
+dependencies:
+  speech_to_text: ^7.0.0
+  flutter_tts: ^4.0.0
+  http: ^1.2.0
+final speech = SpeechToText();
+final tts = FlutterTts();
+
+Future<void> listen() async {
+  bool available = await speech.initialize();
+
+  if (available) {
+    speech.listen(
+      onResult: (result) async {
+        String userText = result.recognizedWords;
+
+        String aiReply = await askAI(userText);
+
+        await tts.speak(aiReply);
+      },
+    );
+  }
+}
+Future<String> askAI(String message) async {
+  final response = await http.post(
+    Uri.parse("https://api.openai.com/v1/chat/completions"),
+    headers: {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json",
+    },
+    body: jsonEncode({
+      "model": "gpt-4.1-mini",
+      "messages": [
+        {"role": "user", "content": message}
+      ]
+    }),
+  );
+
+  final data = jsonDecode(response.body);
+
+  return data["choices"][0]["message"]["content"];
+}
+AvatarGlow(
+  glowColor: Colors.blue,
+  child: CircleAvatar(
+    radius: 50,
+    backgroundColor: Colors.black,
+    child: Icon(Icons.mic, color: Colors.cyan),
+  ),
+)
+final speech = SpeechToText();
+
+await speech.initialize();
+
+speech.listen(
+  onResult: (result) {
+    String text = result.recognizedWords;
+
+    askJarvis(text);
+  },
+);
+Future<String> askAI(String prompt) async {
+  final response = await http.post(
+    Uri.parse("https://api.openai.com/v1/chat/completions"),
+    headers: {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json",
+    },
+    body: jsonEncode({
+      "model": "gpt-4.1-mini",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are Jarvis, a smart AI assistant."
+        },
+        {
+          "role": "user",
+          "content": prompt
+        }
+      ]
+    }),
+  );
+
+  final data = jsonDecode(response.body);
+
+  return data["choices"][0]["message"]["content"];
+}
+final tts = FlutterTts();
+
+await tts.speak(aiReply);
+if(text.toLowerCase().contains("hey jarvis")) {
+   activateAssistant();
+}
+Open YouTube
+Open Spotify
+Call Mom
