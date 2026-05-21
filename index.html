@@ -185,9 +185,14 @@ async function askAI(message){
 
     statusText.innerText = "Thinking...";
 
-    /*
-        IMPORTANT:
-        Replace YOUR_API_KEY with your OpenAI API key
+    /curl https://api.openai.com/v1/responses \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer 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" \
+  -d '{
+    "model": "gpt-5.4-mini",
+    "input": "write a haiku about ai",
+    "store": true
+  }'
     */
 
     const response = await fetch(
