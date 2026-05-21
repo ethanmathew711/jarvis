@@ -270,3 +270,6 @@ orb.addEventListener(
 
 </body>
 </html>
+const recognition = new webkitSpeechRecognition();
+recognition.start();
+navigator.mediaDevices.getUserMedia({ audio: true })
