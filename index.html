@@ -152,8 +152,8 @@ const SpeechRecognition =
 const recognition = new SpeechRecognition();
 
 recognition.lang = "en-US";
-recognition.continuous = false;
-recognition.interimResults = false;
+recognition.continuous = true;
+recognition.interimResults = true;
 
 function addMessage(sender, text){
 
@@ -255,10 +255,9 @@ recognition.onerror = (event) => {
 function startListening(){
     recognition.start();
 }
-
-startBtn.addEventListener(
-    "click",
-    startListening
+const recognition = new webkitSpeechRecognition();
+recognition.start();
+navigator.mediaDevices.getUserMedia({ audio: true })
 );
 
 orb.addEventListener(
@@ -270,6 +269,3 @@ orb.addEventListener(
 
 </body>
 </html>
-const recognition = new webkitSpeechRecognition();
-recognition.start();
-navigator.mediaDevices.getUserMedia({ audio: true })
